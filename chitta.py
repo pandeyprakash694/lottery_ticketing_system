@@ -7,14 +7,14 @@ from io import BytesIO
 
 # Placeholder URLs for prize images (use actual URLs or local files in a real scenario)
 prize_images = {
-    "Electric Jug (Yasuda)": "/Users/prakashpandey/Downloads/electric_jug.png",
-    "Iron (Yasuda)": "/Users/prakashpandey/Downloads/iron.png",
-    "Mixture Grinder (Yasuda)": "/Users/prakashpandey/Downloads/electric_mixture.png",
-    "Smart TV (32 inches, Sansui)": "/Users/prakashpandey/Downloads/television.png",
-    "Dell Laptop": "/Users/prakashpandey/Downloads/laptop.png",
-    "Washing Machine": "/Users/prakashpandey/Downloads/washing_machine.png",
-    "iPhone 15": "/Users/prakashpandey/Downloads/iphone.png",
-    "Bike": "/Users/prakashpandey/Downloads/shine.png"
+    "Electric Jug (Yasuda)": "images\jug.jpg",
+    "Iron (Yasuda)": "images\iron.png",
+    "Mixture Grinder (Yasuda)": "images\mixture.png",
+    "Smart TV (32 inches, Sansui)": "images\smarttv.png",
+    "Dell Laptop": "images\jug.jpg",
+    "Washing Machine": "images\jug.jpg",
+    "iPhone 15": "images\jug.jpg",
+    "Bike": "images\jug.jpg"
 }
 
 # Define ticket range and prizes
