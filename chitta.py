@@ -17,8 +17,17 @@ prize_images = {
     "Bike": "static\images\jug.jpg"
 }
 
+# Define the list of numbers that should be excluded
+#excluded_numbers = [10123, 10567, 20000, 23000]  # Replace with actual numbers to exclude
+
 # Define ticket range and prizes
 ticket_range = list(range(10000, 25001))
+
+# Exclude the unwanted numbers from the ticket range
+#filtered_ticket_range = [ticket for ticket in ticket_range if ticket not in excluded_numbers]
+
+# File path to save the winners list
+winners_file_path = "winners.xlsx"
 
 # Define the number of prizes for each category
 prizes = {
@@ -39,6 +48,10 @@ for prize, quantity in prizes.items():
 
 # Shuffle the ticket numbers and prize list
 random.shuffle(ticket_range)
+
+# Shuffle the ticket numbers after filtering
+#random.shuffle(filtered_ticket_range)
+
 random.shuffle(prize_list)
 
 # Create a dictionary to store ticket and prize assignments
@@ -156,6 +169,32 @@ def display_ticket_digits_with_ball_animation(ticket_number):
         ticket_placeholder.markdown(f"<h1 style='text-align: center;'>{displayed_ticket}{'_' * (len(ticket_str) - i - 1)}</h1>", unsafe_allow_html=True)
         time.sleep(5)  # Short delay before the next digit
 
+
+# Exporting to separate excel file
+
+# Function to load existing winners from the file if it exists
+def load_existing_winners():
+    if os.path.exists(winners_file_path):
+        # Read existing data from the Excel file
+        return pd.read_excel(winners_file_path)
+    else:
+        # Return an empty DataFrame if no file exists
+        return pd.DataFrame(columns=["Ticket Number", "Prize"])
+
+# Function to save winners to the Excel file
+def save_winners_to_excel(data):
+    df = pd.DataFrame(data)
+
+    # Load existing winners
+    existing_winners = load_existing_winners()
+
+    # Append new winners to the existing ones
+    updated_winners = pd.concat([existing_winners, df], ignore_index=True)
+
+    # Save the updated winners list back to the Excel file
+    with pd.ExcelWriter(winners_file_path, engine='xlsxwriter') as writer:
+        updated_winners.to_excel(writer, index=False, sheet_name='Winners')
+
 # Button to draw a ticket
 if st.button('🎟️ Draw a Ticket'):
     ticket, prize = draw_ticket()
@@ -211,23 +250,20 @@ if st.session_state.show_prize:
     st.session_state.show_reveal_button = True
 
 # Display the list of all winners in a table
+# After a winner is drawn and added to the list
 if st.session_state.winner_list:
+    # Automatically save the updated winner list to the Excel file
+    save_winners_to_excel(st.session_state.winner_list)
+
+    # Display the list of all winners in a table
     st.subheader("All Winners")
     df_winners = pd.DataFrame(st.session_state.winner_list)
     st.dataframe(df_winners)
 
-    # Export winners data to Excel
-    def export_to_excel(data):
-        df = pd.DataFrame(data)
-        buffer = BytesIO()
-        with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
-            df.to_excel(writer, index=False, sheet_name='Winners')
-        buffer.seek(0)
-        return buffer
-
+    # Provide a button for manual download (optional)
     st.download_button(
         label="Download Winners List as Excel",
-        data=export_to_excel(st.session_state.winner_list),
+        data=BytesIO(open(winners_file_path, 'rb').read()),
         file_name='winners_list.xlsx',
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
