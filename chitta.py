@@ -7,14 +7,14 @@ from io import BytesIO
 
 # Placeholder URLs for prize images (use actual URLs or local files in a real scenario)
 prize_images = {
-    "Electric Jug (Yasuda)": "images\jug.jpg",
-    "Iron (Yasuda)": "images\iron.png",
-    "Mixture Grinder (Yasuda)": "images\mixture.png",
-    "Smart TV (32 inches, Sansui)": "images\smarttv.png",
-    "Dell Laptop": "images\jug.jpg",
-    "Washing Machine": "images\jug.jpg",
-    "iPhone 15": "images\jug.jpg",
-    "Bike": "images\jug.jpg"
+    "Electric Jug (Yasuda)": "static\images\jug.jpg",
+    "Iron (Yasuda)": "static\images\iron.png",
+    "Mixture Grinder (Yasuda)": "static\images\mixture.png",
+    "Smart TV (32 inches, Sansui)": "static\images\smarttv.png",
+    "Dell Laptop": "static\images\jug.jpg",
+    "Washing Machine": "static\images\jug.jpg",
+    "iPhone 15": "static\images\jug.jpg",
+    "Bike": "static\images\jug.jpg"
 }
 
 # Define ticket range and prizes
@@ -188,25 +188,19 @@ if st.session_state.show_prize:
         time.sleep(0.5)
 
     # Display the actual prize image and result text in the same row using flexbox
+    # Display the actual prize image and result text in the same row using flexbox
     prize_image_path = prize_images.get(st.session_state.prize, None)  # Get the path for the current prize
+
     if prize_image_path and os.path.exists(prize_image_path):
         result_text = f"🎫 Ticket {st.session_state.drawn_ticket} wins: {st.session_state.prize} 🎁"
-        
+
         # Clear the placeholder and show the final prize image and result text
         placeholder_image.empty()
-        st.markdown(f"""
-            <div class="prize-box">
-                <div class="prize-image">
-                    <img src="file://{prize_image_path}" alt="Prize Image">
-                </div>
-                <div class="prize-text">
-                    <h2>{result_text}</h2>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
+        st.markdown(f"<h2 style='text-align:center;'>{result_text}</h2>", unsafe_allow_html=True)
+        st.image(prize_image_path, caption=st.session_state.prize, width=300)
     else:
         st.error("Prize image not found.")
-    
+
     # Append the winner to the winner list (Ticket and Prize)
     st.session_state.winner_list.append({
         "Ticket Number": st.session_state.drawn_ticket,
