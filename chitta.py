@@ -4,6 +4,30 @@ import random
 import time
 import pandas as pd
 from io import BytesIO
+from gtts import gTTS
+import playsound
+
+
+# Map digits to sound file paths
+digit_sounds = {
+    '0': 'static/sounds/digit_0.mp3',
+    '1': 'static/sounds/digit_1.mp3',
+    '2': 'static/sounds/digit_2.mp3',
+    '3': 'static/sounds/digit_3.mp3',
+    '4': 'static/sounds/digit_4.mp3',
+    '5': 'static/sounds/digit_5.mp3',
+    '6': 'static/sounds/digit_6.mp3',
+    '7': 'static/sounds/digit_7.mp3',
+    '8': 'static/sounds/digit_8.mp3',
+    '9': 'static/sounds/digit_9.mp3'
+}
+# Function to convert a number to speech
+# Function to play the sound for the digit
+def play_digit_sound(digit):
+    sound_file = digit_sounds.get(digit)
+    if sound_file and os.path.exists(sound_file):
+        st.audio(sound_file)
+
 
 # Placeholder URLs for prize images (use actual URLs or local files in a real scenario)
 prize_images = {
@@ -126,6 +150,8 @@ def draw_ticket():
     return ticket, prize
 
 # Function to display the ball with shuffling numbers and reveal the actual digit
+# Updated function to display the ball with shuffling numbers and reveal the actual digit
+# Function to display the ball with shuffling numbers and reveal the actual digit
 def display_ticket_digits_with_ball_animation(ticket_number):
     ticket_str = str(ticket_number)  # Convert ticket number to string
     displayed_ticket = ""  # Start with an empty string
@@ -133,10 +159,11 @@ def display_ticket_digits_with_ball_animation(ticket_number):
     # Create placeholders for displaying the ticket and the "rolling" ball
     ticket_placeholder = st.empty()
     ball_placeholder = st.empty()
-    
+    audio_placeholder = st.empty()  # Placeholder for the audio
+
     for i, digit in enumerate(ticket_str):
         displayed_ticket += digit  # Add the next digit to the displayed ticket
-        
+
         # Shuffle numbers within the ball for 2 seconds
         start_time = time.time()
         while time.time() - start_time < 4:
@@ -152,8 +179,8 @@ def display_ticket_digits_with_ball_animation(ticket_number):
             """
             ball_placeholder.markdown(ball_html, unsafe_allow_html=True)
             time.sleep(0.1)  # Short delay to simulate fast number shuffling
-        
-        # After 2 seconds, display the actual digit
+
+        # After 4 seconds, display the actual digit
         ball_html = f"""
         <div style='text-align: center;'>
             <div style="width: 150px; height: 150px; background-color: red; border-radius: 50%; 
@@ -164,11 +191,15 @@ def display_ticket_digits_with_ball_animation(ticket_number):
         </div>
         """
         ball_placeholder.markdown(ball_html, unsafe_allow_html=True)
-        
+
+        # Play the corresponding sound for the digit
+        sound_file_path = f"static/sounds/digit_{digit}.mp3"
+        if os.path.exists(sound_file_path):
+            audio_placeholder.audio(sound_file_path, autoplay=True)
+
         # Update the full ticket display
         ticket_placeholder.markdown(f"<h1 style='text-align: center;'>{displayed_ticket}{'_' * (len(ticket_str) - i - 1)}</h1>", unsafe_allow_html=True)
         time.sleep(5)  # Short delay before the next digit
-
 
 # Exporting to separate excel file
 
