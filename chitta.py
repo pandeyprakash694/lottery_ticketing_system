@@ -35,10 +35,10 @@ prize_images = {
     "Iron (Yasuda)": "static\images\iron.png",
     "Mixture Grinder (Yasuda)": "static\images\mixture.png",
     "Smart TV (32 inches, Sansui)": "static\images\smarttv.png",
-    "Dell Laptop": "static\images\jug.jpg",
-    "Washing Machine": "static\images\jug.jpg",
-    "iPhone 15": "static\images\jug.jpg",
-    "Bike": "static\images\jug.jpg"
+    "Dell Laptop": "static\images\dell.png",
+    "Washing Machine": "static\images\washing.png",
+    "iPhone 15": "static\images\iphone.png",
+    "Bike": "static\images\ike.png",
 }
 
 # Define the list of numbers that should be excluded
@@ -123,16 +123,24 @@ st.markdown(
         text-align: center;
         padding: 10px;
     }
+     .logo {
+        text-align: center;
+        margin-bottom: 20px; /* Add some spacing below the logo */
+        margin-left: 100px;
+    }
     </style>
     """, 
     unsafe_allow_html=True
 )
 
+# Display logo at the top of the page
+#st.markdown('<div class="logo"><img src="static/images/logo.png" width="200"/></div>', unsafe_allow_html=True)
+#st.image('static/images/logo.png', width=200)
 # Apply the CSS class to the title
-st.markdown('<h1 class="single-line-title">🎉 कृषि विकास बैंक कर्मचारी संघ उपहार कार्यक्रम २०८० 🎉</h1>', unsafe_allow_html=True)
+st.markdown('<h1 class="single-line-title">🎉 कृषि विकास बैंक कर्मचारी संघ उपहार कार्यक्रम २०८१ 🎉</h1>', unsafe_allow_html=True)
 
 # Applying the CSS class to the subheader
-st.markdown('<h2 class="centered-subheader">विजेता छान्नुहोस्!</h2>', unsafe_allow_html=True)
+st.markdown('<h3 class="centered-subheader">विजेता छान्नुहोस्!</h3>', unsafe_allow_html=True)
 
 # Initialize session state variables
 if 'drawn_ticket' not in st.session_state:
@@ -150,21 +158,17 @@ def draw_ticket():
     return ticket, prize
 
 # Function to display the ball with shuffling numbers and reveal the actual digit
-# Updated function to display the ball with shuffling numbers and reveal the actual digit
-# Function to display the ball with shuffling numbers and reveal the actual digit
 def display_ticket_digits_with_ball_animation(ticket_number):
-    ticket_str = str(ticket_number)  # Convert ticket number to string
-    displayed_ticket = ""  # Start with an empty string
+    ticket_str = str(ticket_number)
+    displayed_ticket = ""
 
-    # Create placeholders for displaying the ticket and the "rolling" ball
     ticket_placeholder = st.empty()
     ball_placeholder = st.empty()
-    audio_placeholder = st.empty()  # Placeholder for the audio
+    audio_placeholder = st.empty()
 
     for i, digit in enumerate(ticket_str):
-        displayed_ticket += digit  # Add the next digit to the displayed ticket
+        displayed_ticket += digit
 
-        # Shuffle numbers within the ball for 2 seconds
         start_time = time.time()
         while time.time() - start_time < 4:
             random_digit = random.randint(0, 9)
@@ -178,9 +182,8 @@ def display_ticket_digits_with_ball_animation(ticket_number):
             </div>
             """
             ball_placeholder.markdown(ball_html, unsafe_allow_html=True)
-            time.sleep(0.1)  # Short delay to simulate fast number shuffling
+            time.sleep(0.1)
 
-        # After 4 seconds, display the actual digit
         ball_html = f"""
         <div style='text-align: center;'>
             <div style="width: 150px; height: 150px; background-color: red; border-radius: 50%; 
@@ -192,14 +195,12 @@ def display_ticket_digits_with_ball_animation(ticket_number):
         """
         ball_placeholder.markdown(ball_html, unsafe_allow_html=True)
 
-        # Play the corresponding sound for the digit
         sound_file_path = f"static/sounds/digit_{digit}.mp3"
         if os.path.exists(sound_file_path):
             audio_placeholder.audio(sound_file_path, autoplay=True)
 
-        # Update the full ticket display
         ticket_placeholder.markdown(f"<h1 style='text-align: center;'>{displayed_ticket}{'_' * (len(ticket_str) - i - 1)}</h1>", unsafe_allow_html=True)
-        time.sleep(5)  # Short delay before the next digit
+        time.sleep(5)
 
 # Exporting to separate excel file
 
@@ -247,24 +248,18 @@ if not st.session_state.show_reveal_button and st.session_state.drawn_ticket and
     st.session_state.show_prize = True
 
 if st.session_state.show_prize:
-    # Rotate images for 3 seconds before showing the actual prize
-    placeholder_image = st.empty()  # Placeholder for prize image
+    placeholder_image = st.empty()
 
     start_time = time.time()
     while time.time() - start_time < 3:
-        # Display a random prize image every 0.5 seconds
         random_prize = random.choice(list(prize_images.values()))
         placeholder_image.image(random_prize, width=300)
         time.sleep(0.5)
 
-    # Display the actual prize image and result text in the same row using flexbox
-    # Display the actual prize image and result text in the same row using flexbox
-    prize_image_path = prize_images.get(st.session_state.prize, None)  # Get the path for the current prize
+    prize_image_path = prize_images.get(st.session_state.prize, None)
 
     if prize_image_path and os.path.exists(prize_image_path):
         result_text = f"🎫 Ticket {st.session_state.drawn_ticket} wins: {st.session_state.prize} 🎁"
-
-        # Clear the placeholder and show the final prize image and result text
         placeholder_image.empty()
         st.markdown(f"<h2 style='text-align:center;'>{result_text}</h2>", unsafe_allow_html=True)
         st.image(prize_image_path, caption=st.session_state.prize, width=300)
@@ -300,4 +295,4 @@ if st.session_state.winner_list:
     )
 
 # Footer
-st.markdown('<div class="footer">© 2024 कृषि विकास बैंक कर्मचारी संघ</div>', unsafe_allow_html=True)
+st.markdown('<div class="footer">© 2024 कृषि विकास बैंक कर्मचारी संघ !!</div>', unsafe_allow_html=True)
