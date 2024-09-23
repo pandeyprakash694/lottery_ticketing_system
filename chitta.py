@@ -31,7 +31,7 @@ def play_digit_sound(digit):
 
 # Placeholder URLs for prize images (use actual URLs or local files in a real scenario)
 prize_images = {
-    "Electric Jug (Yasuda)": "static\images\jug.jpg",
+    "Electric Jug (Yasuda)": "static\images\jug.png",
     "Iron (Yasuda)": "static\images\iron.png",
     "Mixture Grinder (Yasuda)": "static\images\mixture.png",
     "Smart TV (32 inches, Sansui)": "static\images\smarttv.png",
@@ -153,7 +153,7 @@ if 'drawn_ticket' not in st.session_state:
 # Function to draw a ticket
 def draw_ticket():
     if not prize_assignment:
-        return "No more prizes available", None
+        return "No More Prizes Available", None
     ticket, prize = prize_assignment.popitem()  # Remove and return a ticket and its prize
     return ticket, prize
 
@@ -174,7 +174,7 @@ def display_ticket_digits_with_ball_animation(ticket_number):
             random_digit = random.randint(0, 9)
             ball_html = f"""
             <div style='text-align: center;'>
-                <div style="width: 150px; height: 150px; background-color: red; border-radius: 50%; 
+                <div style="width: 150px; height: 150px; background-color: green; border-radius: 50%; 
                             display: inline-block; text-align: center; line-height: 150px; color: white; 
                             font-size: 75px; margin: auto;">
                     {random_digit}
@@ -186,7 +186,7 @@ def display_ticket_digits_with_ball_animation(ticket_number):
 
         ball_html = f"""
         <div style='text-align: center;'>
-            <div style="width: 150px; height: 150px; background-color: red; border-radius: 50%; 
+            <div style="width: 150px; height: 150px; background-color: green; border-radius: 50%; 
                         display: inline-block; text-align: center; line-height: 150px; color: white; 
                         font-size: 75px; margin: auto;">
                 {digit}
@@ -228,7 +228,7 @@ def save_winners_to_excel(data):
         updated_winners.to_excel(writer, index=False, sheet_name='Winners')
 
 # Button to draw a ticket
-if st.button('🎟️ Draw a Ticket'):
+if st.button('🎟️🎫 Draw a Ticket'):
     ticket, prize = draw_ticket()
 
     if prize:
@@ -254,7 +254,7 @@ if st.session_state.show_prize:
     while time.time() - start_time < 3:
         random_prize = random.choice(list(prize_images.values()))
         placeholder_image.image(random_prize, width=300)
-        time.sleep(0.5)
+        time.sleep(0.1)
 
     prize_image_path = prize_images.get(st.session_state.prize, None)
 
