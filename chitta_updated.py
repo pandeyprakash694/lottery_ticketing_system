@@ -7,7 +7,7 @@ from io import BytesIO
 from gtts import gTTS
 import playsound
 
-from chitta import save_winners_to_excel, display_ticket_digits_with_ball_animation, prize_images
+from chitta import display_ticket_digits_with_ball_animation, prize_images
 
 # Map digits to sound file paths
 digit_sounds = {
@@ -45,34 +45,54 @@ filtered_ticket_range = [ticket for ticket in ticket_range if ticket not in draw
 
 # Define the number of prizes for each category
 prizes = {
-    "Electric Jug (Yasuda)": 50,
-    "Iron (Yasuda)": 25,
-    "Mixture Grinder (Yasuda)": 15,
-    "Smart TV (32 inches, Sansui)": 2,
+    "Electric Jug (Yasuda)": 2,
+    "Iron (Yasuda)": 2,
+    "Mixture Grinder (Yasuda)": 1,
+    "Smart TV (32 inches, Sansui)": 1,
     "Dell Laptop": 1,
     "Washing Machine": 1,
     "iPhone 15": 1,
     "Bike": 1
 }
 
-# Create a list of prizes
+
+# Adjust remaining prizes based on existing winners
+remaining_prizes = prizes.copy()
+for prize in existing_winners["Prize"]:
+    if prize in remaining_prizes and remaining_prizes[prize] > 0:
+        remaining_prizes[prize] -= 1
+
+# Create a shuffled list of remaining prizes
 prize_list = []
-for prize, quantity in prizes.items():
+for prize, quantity in remaining_prizes.items():
     prize_list.extend([prize] * quantity)
+random.shuffle(prize_list)  # Shuffle the prize list
 
-# Shuffle the ticket numbers and prize list
+# Shuffle the ticket numbers
 random.shuffle(filtered_ticket_range)
-random.shuffle(prize_list)
-
-# Create a dictionary to store ticket and prize assignments
-prize_assignment = dict(zip(filtered_ticket_range, prize_list))
 
 # Function to draw a ticket
 def draw_ticket():
-    if not prize_assignment:
+    if not prize_list or not filtered_ticket_range:
         return "No More Prizes Available", None
-    ticket, prize = prize_assignment.popitem()  # Remove and return a ticket and its prize
+
+    # Draw a random ticket and assign a prize
+    ticket = filtered_ticket_range.pop(0)
+    prize = prize_list.pop(0)  # Get a prize from the shuffled prize list
     return ticket, prize
+
+def save_winners_to_excel(data):
+    df = pd.DataFrame(data)
+
+    # Load existing winners
+    existing_winners = load_existing_winners()
+
+    # Append new winners to the existing ones, ensuring no duplicates
+    updated_winners = pd.concat([existing_winners, df]).drop_duplicates(subset=["Ticket Number"], keep="first")
+
+    # Save the updated winners list back to the Excel file
+    with pd.ExcelWriter(winners_file_path, engine='xlsxwriter') as writer:
+        updated_winners.to_excel(writer, index=False, sheet_name='Winners')
 
 # Streamlit App
 st.markdown('<h1 class="single-line-title">🎉 कृषि विकास बैंक कर्मचारी संघ उपहार कार्यक्रम २०८१ 🎉</h1>', unsafe_allow_html=True)
@@ -85,21 +105,30 @@ if 'drawn_ticket' not in st.session_state:
     st.session_state.winner_list = []  # To store previous winners
     st.session_state.show_reveal_button = True  # Track visibility of the reveal button
 
+# Display the remaining prize inventory
+st.sidebar.subheader("Remaining Prizes Inventory")
+for prize, count in remaining_prizes.items():
+    st.sidebar.write(f"{prize}: {count} remaining")
+
+# Button to draw a ticket with a unique key
 # Button to draw a ticket with a unique key
 if st.button('🎟️🎫 Draw a Ticket', key='draw_ticket_button'):
     ticket, prize = draw_ticket()
 
-    if prize:
-        # Save drawn ticket and prize to session state
-        st.session_state.drawn_ticket = ticket
-        st.session_state.prize = prize
-        st.session_state.show_prize = False
-        st.session_state.show_reveal_button = False  # Hide the reveal button
+    if prize == "No More Prizes Available":
+        st.error("No More Prizes Available")  # Show an error message
+    elif prize:
+        # Prevent duplicate tickets
+        if ticket not in drawn_tickets:
+            st.session_state.drawn_ticket = ticket
+            st.session_state.prize = prize
+            st.session_state.show_prize = False
+            st.session_state.show_reveal_button = False  # Hide the reveal button
 
-        # Show the ticket number with ball animation
-        display_ticket_digits_with_ball_animation(ticket)
+            # Show the ticket number with ball animation
+            display_ticket_digits_with_ball_animation(ticket)
 
-        st.subheader("Prize Wheel!")
+            st.subheader("Prize Wheel!")
 
 # Button to reveal the prize with a unique key
 if not st.session_state.show_reveal_button and st.session_state.drawn_ticket and st.button("के पर्यो त?", key='reveal_prize_button'):

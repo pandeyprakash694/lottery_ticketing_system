@@ -170,7 +170,7 @@ def display_ticket_digits_with_ball_animation(ticket_number):
         displayed_ticket += digit
 
         start_time = time.time()
-        while time.time() - start_time < 4:
+        while time.time() - start_time < 0.1:
             random_digit = random.randint(0, 9)
             ball_html = f"""
             <div style='text-align: center;'>
@@ -200,7 +200,7 @@ def display_ticket_digits_with_ball_animation(ticket_number):
             audio_placeholder.audio(sound_file_path, autoplay=True)
 
         ticket_placeholder.markdown(f"<h1 style='text-align: center;'>{displayed_ticket}{'_' * (len(ticket_str) - i - 1)}</h1>", unsafe_allow_html=True)
-        time.sleep(5)
+        time.sleep(0.1)
 
 # Exporting to separate excel file
 
@@ -251,7 +251,7 @@ if st.session_state.show_prize:
     placeholder_image = st.empty()
 
     start_time = time.time()
-    while time.time() - start_time < 3:
+    while time.time() - start_time < 0.1:
         random_prize = random.choice(list(prize_images.values()))
         placeholder_image.image(random_prize, width=300)
         time.sleep(0.1)
