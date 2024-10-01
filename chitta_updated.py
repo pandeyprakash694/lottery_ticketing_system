@@ -45,10 +45,10 @@ filtered_ticket_range = [ticket for ticket in ticket_range if ticket not in draw
 
 # Define the number of prizes for each category
 prizes = {
-    "Electric Jug (Yasuda)": 2,
-    "Iron (Yasuda)": 2,
-    "Mixture Grinder (Yasuda)": 1,
-    "Smart TV (32 inches, Sansui)": 1,
+    "Electric Jug (Yasuda)": 50,
+    "Iron (Yasuda)": 25,
+    "Mixture Grinder (Yasuda)": 15,
+    "Smart TV (32 inches, Sansui)": 2,
     "Dell Laptop": 1,
     "Washing Machine": 1,
     "iPhone 15": 1,
