@@ -137,10 +137,10 @@ st.markdown(
 #st.markdown('<div class="logo"><img src="static/images/logo.png" width="200"/></div>', unsafe_allow_html=True)
 #st.image('static/images/logo.png', width=200)
 # Apply the CSS class to the title
-#st.markdown('<h1 class="single-line-title">🎉 कृषि विकास बैंक कर्मचारी संघ उपहार कार्यक्रम २०८१ 🎉</h1>', unsafe_allow_html=True)
+st.markdown('<h1 class="single-line-title">🎉 कृषि विकास बैंक कर्मचारी संघ उपहार कार्यक्रम २०८१ 🎉</h1>', unsafe_allow_html=True)
 
 # Applying the CSS class to the subheader
-#st.markdown('<h3 class="centered-subheader">विजेता छान्नुहोस्!</h3>', unsafe_allow_html=True)
+st.markdown('<h3 class="centered-subheader">विजेता छान्नुहोस्!</h3>', unsafe_allow_html=True)
 
 # Initialize session state variables
 if 'drawn_ticket' not in st.session_state:

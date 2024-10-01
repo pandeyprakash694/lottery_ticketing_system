@@ -7,7 +7,7 @@ from io import BytesIO
 from gtts import gTTS
 import playsound
 
-from chitta import display_ticket_digits_with_ball_animation, prize_images
+from chitta import display_ticket_digits_with_ball_animation, prize_images,play_digit_sound
 
 # Map digits to sound file paths
 digit_sounds = {
@@ -95,7 +95,9 @@ def save_winners_to_excel(data):
         updated_winners.to_excel(writer, index=False, sheet_name='Winners')
 
 # Streamlit App
-st.markdown('<h1 class="single-line-title">🎉 कृषि विकास बैंक कर्मचारी संघ उपहार कार्यक्रम २०८१ 🎉</h1>', unsafe_allow_html=True)
+st.markdown('<h1 class="single-line-title">🎉 कृषि विकास बैंक कर्मचारी संघ नेपाल उपहार कार्यक्रम २०८१ 🎉</h1>', unsafe_allow_html=True)
+# Applying the CSS class to the subheader
+st.markdown('<h3 class="centered-subheader">विजेता छान्नुहोस्!</h3>', unsafe_allow_html=True)
 
 # Initialize session state variables
 if 'drawn_ticket' not in st.session_state:
@@ -110,7 +112,6 @@ st.sidebar.subheader("Remaining Prizes Inventory")
 for prize, count in remaining_prizes.items():
     st.sidebar.write(f"{prize}: {count} remaining")
 
-# Button to draw a ticket with a unique key
 # Button to draw a ticket with a unique key
 if st.button('🎟️🎫 Draw a Ticket', key='draw_ticket_button'):
     ticket, prize = draw_ticket()
