@@ -89,6 +89,7 @@ st.markdown(
     .single-line-title {
         font-size: 40px;
         text-align: center;
+        color: #00753a; /* Set the desired color */
     }
     .centered-subheader {
         text-align: center;
@@ -227,6 +228,29 @@ def save_winners_to_excel(data):
     with pd.ExcelWriter(winners_file_path, engine='xlsxwriter') as writer:
         updated_winners.to_excel(writer, index=False, sheet_name='Winners')
 
+"""
+# Function to simulate a rotating prize wheel
+def simulate_prize_wheel():
+    placeholder_image = st.empty()
+
+    # Spin the wheel for 3 seconds, showing random prize images
+    start_time = time.time()
+    while time.time() - start_time < 3:
+        random_prize = random.choice(list(prize_images.values()))
+        placeholder_image.image(random_prize, width=300)
+        time.sleep(0.1)  # Faster update for smoother "rotation"
+
+    # After 3 seconds, show the actual prize
+    prize_image_path = prize_images.get(st.session_state.prize, None)
+
+    if prize_image_path and os.path.exists(prize_image_path):
+        result_text = f"🎫 Ticket {st.session_state.drawn_ticket} wins: {st.session_state.prize} 🎁"
+        placeholder_image.empty()  # Clear the placeholder
+        st.markdown(f"<h2 style='text-align:center;'>{result_text}</h2>", unsafe_allow_html=True)
+        st.image(prize_image_path, caption=st.session_state.prize, width=300)
+    else:
+        st.error("Prize image not found.")
+
 
 # Button to draw a ticket
 if st.button('🎟️🎫 Draw a Ticket'):
@@ -250,23 +274,7 @@ if not st.session_state.show_reveal_button and st.session_state.drawn_ticket and
     st.session_state.show_prize = True
 
 if st.session_state.show_prize:
-    placeholder_image = st.empty()
-
-    start_time = time.time()
-    while time.time() - start_time < 3:
-        random_prize = random.choice(list(prize_images.values()))
-        placeholder_image.image(random_prize, width=300)
-        time.sleep(0.5)
-
-    prize_image_path = prize_images.get(st.session_state.prize, None)
-
-    if prize_image_path and os.path.exists(prize_image_path):
-        result_text = f"🎫 Ticket {st.session_state.drawn_ticket} wins: {st.session_state.prize} 🎁"
-        placeholder_image.empty()
-        st.markdown(f"<h2 style='text-align:center;'>{result_text}</h2>", unsafe_allow_html=True)
-        st.image(prize_image_path, caption=st.session_state.prize, width=300)
-    else:
-        st.error("Prize image not found.")
+    simulate_prize_wheel()
 
     # Append the winner to the winner list (Ticket and Prize)
     st.session_state.winner_list.append({
@@ -276,7 +284,7 @@ if st.session_state.show_prize:
 
     # Show the reveal button again for the next draw
     st.session_state.show_reveal_button = True
-
+"""
 # Display the list of all winners in a table
 # After a winner is drawn and added to the list
 if st.session_state.winner_list:
@@ -297,4 +305,19 @@ if st.session_state.winner_list:
     )
 
 # Footer
-st.markdown('<div class="footer">© 2024 कृषि विकास बैंक कर्मचारी संघ !!</div>', unsafe_allow_html=True)
+footer_html = """
+    <style>
+    .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: #00753a; /* Changed to the desired background color */
+        color: white; /* Changed text color for better contrast */
+        text-align: center;
+        padding: 10px 0;
+    }
+    </style>
+    <div class="footer">© 2024 कृषि विकास बैंक कर्मचारी संघ !!</div>
+"""
+st.markdown(footer_html, unsafe_allow_html=True)
