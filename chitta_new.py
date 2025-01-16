@@ -31,21 +31,29 @@ def play_digit_sound(digit):
 
 # Placeholder URLs for prize images (use actual URLs or local files in a real scenario)
 prize_images = {
-    "Electric Jug (Yasuda)": "static\images\jug.png",
-    "Iron (Yasuda)": "static\images\iron.png",
-    "Mixture Grinder (Yasuda)": "static\images\mixture.png",
-    "Smart TV (32 inches, Sansui)": "static\images\smarttv.png",
-    "Dell Laptop": "static\images\dell.png",
-    "Washing Machine": "static\images\washing.png",
-    "iPhone 15": "static\images\iphone.png",
-    "Bike": "static\images\ike.png",
+    #"Electric Jug (Yasuda)": "static\images\jug.png",
+    #"Iron (Yasuda)": "static\images\iron.png",
+    #"Mixture Grinder (Yasuda)": "static\images\mixture.png",
+    #"Smart TV (32 inches, Sansui)": "static\images\smarttv.png",
+    #"Dell Laptop": "static\images\dell.png",
+    #"Washing Machine": "static\images\washing.png",
+    #"iPhone 15": "static\images\iphone.png",
+    #"Bike": "static\images\ike.png",
+
+    "Electric Jug ": "static\images\i_electric_jug.jpg",
+    "Electric Iron": "static\images\i_electric_iron.jpg",
+    "Mixture Grinder ": "static\images\i_mixer.jpg",
+    "Oven": "static\images\i_oven.jpg",
+    "LG Washing Machine": "static\images\i_washing.jpg",
+    "Honda Duo": "static\images\i_deo.jpg",
+    "Pulsar": "static\images\i_bike.jpg",
 }
 
 # Define the list of numbers that should be excluded
 #excluded_numbers = [10123, 10567, 20000, 23000]  # Replace with actual numbers to exclude
 
 # Define ticket range and prizes
-ticket_range = list(range(10000, 25001))
+ticket_range = list(range(10000, 23951))
 
 # Exclude the unwanted numbers from the ticket range
 #filtered_ticket_range = [ticket for ticket in ticket_range if ticket not in excluded_numbers]

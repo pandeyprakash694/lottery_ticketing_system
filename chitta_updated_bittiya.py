@@ -100,14 +100,13 @@ filtered_ticket_range = [ticket for ticket in ticket_range if ticket not in draw
 
 # Define the number of prizes for each category
 prizes = {
-    "Electric Jug (Yasuda)": 5,
-    "Iron (Yasuda)": 2,
-    "Mixture Grinder (Yasuda)": 1,
-    "Smart TV (32 inches, Sansui)": 2,
-    "Dell Laptop": 1,
-    "Washing Machine": 1,
-    "iPhone 15": 1,
-    "Bike": 1
+    "Electric Jug ": 30,
+    "Electric Iron": 15,
+    "Mixture Grinder ": 15,
+    "Oven": 15,
+    "LG Washing Machine": 1,
+    "Honda Duo": 1,
+    "Pulsar": 1
 }
 
 
@@ -198,7 +197,7 @@ def simulate_prize_wheel():
 
 
 # Streamlit App
-st.markdown('<h2 class="single-line-title">🎉 कृषि विकास बैंक कर्मचारी संघ नेपाल उपहार कार्यक्रम २०८१ 🎉</h2>', unsafe_allow_html=True)
+st.markdown('<h2 class="single-line-title">🎉 नेपाल वित्तीय संस्था कर्मचारी संघ,  उपहार कार्यक्रम २०८१ 🎉</h2>', unsafe_allow_html=True)
 # Applying the CSS class to the subheader
 st.markdown('<h3 class="centered-subheader">विजेता छान्नुहोस्!</h3>', unsafe_allow_html=True)
 
@@ -292,6 +291,6 @@ footer_html = """
         padding: 10px 0;
     }
     </style>
-    <div class="footer">© 2024 कृषि विकास बैंक कर्मचारी संघ !!</div>
+    <div class="footer">© 2024 नेपाल वित्तीय संस्था कर्मचारी संघ !!</div>
 """
 st.markdown(footer_html, unsafe_allow_html=True)
