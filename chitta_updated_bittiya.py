@@ -6,7 +6,7 @@ import time
 import pandas as pd
 from io import BytesIO
 from gtts import gTTS
-import playsound
+from playsound import playsound
 
 from chitta_new import display_ticket_digits_with_ball_animation, prize_images,play_digit_sound
 
@@ -103,7 +103,7 @@ prizes = {
     "Electric Jug ": 30,
     "Electric Iron": 15,
     "Mixture Grinder ": 15,
-    "Oven": 15,
+    "Yasuda Oven": 15,
     "LG Washing Machine": 1,
     "Honda Duo": 1,
     "Pulsar": 1
@@ -291,6 +291,6 @@ footer_html = """
         padding: 10px 0;
     }
     </style>
-    <div class="footer">© 2024 नेपाल वित्तीय संस्था कर्मचारी संघ !!</div>
+    <div class="footer">© 2025 नेपाल वित्तीय संस्था कर्मचारी संघ !!</div>
 """
 st.markdown(footer_html, unsafe_allow_html=True)

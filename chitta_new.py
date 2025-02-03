@@ -43,7 +43,7 @@ prize_images = {
     "Electric Jug ": "static\images\i_electric_jug.jpg",
     "Electric Iron": "static\images\i_electric_iron.jpg",
     "Mixture Grinder ": "static\images\i_mixer.jpg",
-    "Oven": "static\images\i_oven.jpg",
+    "Yasuda Oven": "static\images\i_yasuda.png",
     "LG Washing Machine": "static\images\i_washing.jpg",
     "Honda Duo": "static\images\i_deo.jpg",
     "Pulsar": "static\images\i_bike.jpg",
@@ -63,14 +63,13 @@ winners_file_path = "winners.xlsx"
 
 # Define the number of prizes for each category
 prizes = {
-    "Electric Jug (Yasuda)": 50,
-    "Iron (Yasuda)": 25,
-    "Mixture Grinder (Yasuda)": 15,
-    "Smart TV (32 inches, Sansui)": 2,
-    "Dell Laptop": 1,
-    "Washing Machine": 1,
-    "iPhone 15": 1,
-    "Bike": 1
+    "Electric Jug ": 30,
+    "Electric Iron": 15,
+    "Mixture Grinder ": 15,
+    "Yasuda Oven": 15,
+    "LG Washing Machine": 1,
+    "Honda Duo": 1,
+    "Pulsar": 1
 }
 
 # Create a list of prizes
@@ -326,6 +325,6 @@ footer_html = """
         padding: 10px 0;
     }
     </style>
-    <div class="footer">© 2024 कृषि विकास बैंक कर्मचारी संघ !!</div>
+    <div class="footer">© 2025 नेपाल वित्तीय संस्था कर्मचारी संघ !!</div>
 """
 st.markdown(footer_html, unsafe_allow_html=True)
