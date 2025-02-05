@@ -82,7 +82,7 @@ st.markdown(
 winners_file_path = "winners.xlsx"
 
 # Define ticket range
-ticket_range = list(range(10001, 23951))
+ticket_range = list(range(1, 20000))
 
 # Function to load existing winners from the file if it exists
 def load_existing_winners():

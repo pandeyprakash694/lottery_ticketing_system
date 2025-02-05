@@ -53,7 +53,7 @@ prize_images = {
 #excluded_numbers = [10123, 10567, 20000, 23000]  # Replace with actual numbers to exclude
 
 # Define ticket range and prizes
-ticket_range = list(range(10000, 23951))
+ticket_range = list(range(1, 20000))
 
 # Exclude the unwanted numbers from the ticket range
 #filtered_ticket_range = [ticket for ticket in ticket_range if ticket not in excluded_numbers]
