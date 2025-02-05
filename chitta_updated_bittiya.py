@@ -188,7 +188,7 @@ def simulate_prize_wheel():
     placeholder_spin_text.empty()  # Clear the "Spinning..." text
 
     if prize_image_path and os.path.exists(prize_image_path):
-        result_text = f"🎫 Ticket {st.session_state.drawn_ticket} wins: {st.session_state.prize} 🎁"
+        result_text = f"🎫 Ticket {str(st.session_state.drawn_ticket).zfill(5)} wins: {st.session_state.prize} 🎁"
         placeholder_image.empty()  # Clear the rotating image
         #st.markdown(f"<h2 style='text-align:center;'>{result_text}</h2>", unsafe_allow_html=True)
         #st.image(prize_image_path, caption=st.session_state.prize, width=300)
@@ -229,7 +229,8 @@ if st.button('🎟️🎫 Draw a Ticket', key='draw_ticket_button'):
             st.session_state.show_reveal_button = False  # Hide the reveal button
 
             # Show the ticket number with ball animation
-            display_ticket_digits_with_ball_animation(ticket)
+            #display_ticket_digits_with_ball_animation(ticket)
+            display_ticket_digits_with_ball_animation(str(ticket).zfill(5))
 
             st.subheader("Prize Wheel!")
 
@@ -244,7 +245,7 @@ if st.session_state.show_prize:
     prize_image_path = prize_images.get(st.session_state.prize, None)
 
     if prize_image_path and os.path.exists(prize_image_path):
-        result_text = f"🎫 Ticket {st.session_state.drawn_ticket} wins: {st.session_state.prize} 🎁"
+        result_text = f"🎫 Ticket {str(st.session_state.drawn_ticket).zfill(5)} wins: {st.session_state.prize} 🎁"
         st.markdown(f"<h2 style='text-align:center;'>{result_text}</h2>", unsafe_allow_html=True)
         st.image(prize_image_path, caption=st.session_state.prize, width=300)
     else:
